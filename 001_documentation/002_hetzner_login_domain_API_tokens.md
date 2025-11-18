@@ -66,4 +66,4 @@ Generate a DNS API token at https://dns.hetzner.com/settings/api-token.
 
 [←Index](#index)
 
-- [004_terraform](./004_terraform.md)
+- [003_terraform](./003_terraform.md)
