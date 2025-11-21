@@ -39,6 +39,14 @@ Create worflow in root folder:
 
 .github/workflows/terraform.yml
 
+We need change the branch to main the wprkflow only work in the branch main.
+```bash
+git add .
+git commit -m"add teraform.yml"
+git push origin main_dev_pro
+git checkout main
+```
+
 
 ```
 HETZNER_CLOUD_TOKEN=your-cloud-token
