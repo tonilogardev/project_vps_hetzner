@@ -15,6 +15,16 @@ on:
 env:
   TF_VAR_HETZNER_CLOUD_TOKEN: ${{ secrets.HETZNER_CLOUD_TOKEN }}
   TF_VAR_HETZNER_DNS_TOKEN: ${{ secrets.HETZNER_DNS_TOKEN }}
+  TF_VAR_DOMAIN_NAME: tonilogar.com
+  TF_VAR_ADMIN_EMAIL: tologardev@gmail.com
+  TF_VAR_SSH_KEY_PATH: ../002_ssh_key/
+  TF_VAR_SSH_KEY_NAME: ssh_vps_hetzner_deploy_github_action
+  TF_VAR_SERVER_NAME: web-project-dev-server
+  TF_VAR_SERVER_IMAGE: ubuntu-24.04
+  TF_VAR_SERVER_TYPE: cx22
+  TF_VAR_SERVER_LOCATION: fsn1
+  TF_VAR_DOCKER_COMPOSE_VERSION: v2.24.0
+  TF_VAR_SUBDOMAINS_TO_REGISTER: '["www","data-science","portfolio"]'
 
 jobs:
   terraform:
@@ -24,6 +34,7 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: 003_terraform
     steps:
       - name: Checkout
         uses: actions/checkout@v4
