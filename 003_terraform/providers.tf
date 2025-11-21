@@ -8,7 +8,7 @@ terraform {
     }
     hetznerdns = {
       source  = "timohirt/hetznerdns"
-      version = "~> 2.4"
+      version = "~> 2.3"
     }
   }
 }
