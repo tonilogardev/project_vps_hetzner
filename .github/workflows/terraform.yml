@@ -1,0 +1,52 @@
+name: Terraform VPS
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Choose Terraform action'
+        required: true
+        default: plan
+        type: choice
+        options:
+          - plan
+          - apply
+
+env:
+  TF_VAR_HETZNER_CLOUD_TOKEN: ${{ secrets.HETZNER_CLOUD_TOKEN }}
+  TF_VAR_HETZNER_DNS_TOKEN: ${{ secrets.HETZNER_DNS_TOKEN }}
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.13.5
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        if: ${{ github.event.inputs.action == 'plan' }}
+        run: terraform plan
+
+      - name: Terraform Plan (apply)
+        if: ${{ github.event.inputs.action == 'apply' }}
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        if: ${{ github.event.inputs.action == 'apply' }}
+        run: terraform apply -auto-approve tfplan
