@@ -35,13 +35,15 @@ terraform plan
 
 Store sensitive tokens in GitHub Secrets so the workflow can expose them to Terraform:
 
-1. Settings → Secrets and variables → Actions → `New repository secret` (`HETZNER_CLOUD_TOKEN`, `HETZNER_DNS_TOKEN`).  
-2. The manual workflow (`.github/workflows/terraform.yml`) maps those secrets to the variables Terraform expects:
+1. Settings → Secrets and variables → Actions → `New repository secret` (`HETZNER_CLOUD_TOKEN`, `HETZNER_DNS_TOKEN`, `HETZNER_SSH_PUBLIC_KEY`).  
+   - `HETZNER_SSH_PUBLIC_KEY` debe contener la línea completa de la clave pública (`ssh-ed25519 ...`) del fichero `002_ssh_key/ssh_vps_hetzner_deploy_github_action.pub` (nunca la clave privada).  
+2. El workflow manual (`.github/workflows/terraform.yml`) mapea esos secretos a las variables que Terraform espera:
 
 ```yaml
 env:
   TF_VAR_HETZNER_CLOUD_TOKEN: ${{ secrets.HETZNER_CLOUD_TOKEN }}
   TF_VAR_HETZNER_DNS_TOKEN: ${{ secrets.HETZNER_DNS_TOKEN }}
+  # Paso intermedio en el workflow: escribe la clave pública en ../002_ssh_key/ usando HETZNER_SSH_PUBLIC_KEY
 ```
 
 ![workflow screenshot](./img/003_terraform_002.png)

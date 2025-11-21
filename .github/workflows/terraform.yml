@@ -44,6 +44,14 @@ jobs:
         with:
           terraform_version: 1.13.5
 
+      - name: Write SSH public key for Terraform
+        env:
+          HETZNER_SSH_PUBLIC_KEY: ${{ secrets.HETZNER_SSH_PUBLIC_KEY }}
+        run: |
+          : "${HETZNER_SSH_PUBLIC_KEY:?Set HETZNER_SSH_PUBLIC_KEY secret with the public key content}"
+          mkdir -p ../002_ssh_key
+          printf "%s\n" "$HETZNER_SSH_PUBLIC_KEY" > ../002_ssh_key/ssh_vps_hetzner_deploy_github_action.pub
+
       - name: Terraform Init
         run: terraform init
 

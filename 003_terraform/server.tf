@@ -24,8 +24,14 @@ resource "hcloud_server" "main" {
   backups     = false
   keep_disk   = true
   labels      = merge(local.server_labels, { role = "web" })
+  user_data = templatefile("${path.module}/scripts/init_server.sh.tpl", {
+    domain_name            = var.DOMAIN_NAME
+    admin_email            = var.ADMIN_EMAIL
+    hetznerdns_token       = var.HETZNER_DNS_TOKEN
+    docker_compose_version = var.DOCKER_COMPOSE_VERSION
+  })
 
   lifecycle {
-    ignore_changes = [labels]
+    ignore_changes = [labels, user_data]
   }
 }
