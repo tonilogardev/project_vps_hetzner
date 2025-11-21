@@ -34,7 +34,7 @@ resource "hetznerdns_record" "subdomain_a" {
 }
 
 resource "hetznerdns_record" "subdomain_aaaa" {
-  for_each = hcloud_server.main.ipv6_address == "" ? {} : toset(var.SUBDOMAINS_TO_REGISTER)
+  for_each = hcloud_server.main.ipv6_address == "" ? toset([]) : toset(var.SUBDOMAINS_TO_REGISTER)
 
   zone_id = data.hetznerdns_zone.primary.id
   name    = each.value
