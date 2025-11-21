@@ -8,7 +8,7 @@ terraform {
     }
     hetznerdns = {
       source  = "timohirt/hetznerdns"
-      version = "~> 2.2"
+      version = ">= 2.0, < 3.0"
     }
   }
 }
@@ -18,5 +18,5 @@ provider "hcloud" {
 }
 
 provider "hetznerdns" {
-  api_token = var.HETZNER_DNS_TOKEN
+  apitoken = var.HETZNER_DNS_TOKEN
 }

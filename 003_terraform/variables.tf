@@ -4,7 +4,7 @@ variable "HETZNER_CLOUD_TOKEN" {
   sensitive   = true
 
   validation {
-    condition     = length(trim(var.HETZNER_CLOUD_TOKEN)) > 0
+    condition     = length(trimspace(var.HETZNER_CLOUD_TOKEN)) > 0
     error_message = "HETZNER_CLOUD_TOKEN cannot be empty."
   }
 }
@@ -15,7 +15,7 @@ variable "HETZNER_DNS_TOKEN" {
   sensitive   = true
 
   validation {
-    condition     = length(trim(var.HETZNER_DNS_TOKEN)) > 0
+    condition     = length(trimspace(var.HETZNER_DNS_TOKEN)) > 0
     error_message = "HETZNER_DNS_TOKEN cannot be empty."
   }
 }
@@ -25,7 +25,7 @@ variable "DOMAIN_NAME" {
   type        = string
 
   validation {
-    condition     = length(trim(var.DOMAIN_NAME)) > 0
+    condition     = length(trimspace(var.DOMAIN_NAME)) > 0
     error_message = "DOMAIN_NAME must be a valid domain."
   }
 }
