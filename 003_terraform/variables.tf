@@ -65,6 +65,12 @@ variable "SERVER_LOCATION" {
   type        = string
 }
 
+variable "ENABLE_IPV6" {
+  description = "Whether to register AAAA DNS records using the server IPv6."
+  type        = bool
+  default     = true
+}
+
 variable "DOCKER_COMPOSE_VERSION" {
   description = "Version reference used when bootstrapping Docker Compose on the server."
   type        = string

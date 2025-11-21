@@ -15,7 +15,7 @@ resource "hetznerdns_record" "apex_a" {
 }
 
 resource "hetznerdns_record" "apex_aaaa" {
-  count   = hcloud_server.main.ipv6_address == "" ? 0 : 1
+  count   = var.ENABLE_IPV6 ? 1 : 0
   zone_id = data.hetznerdns_zone.primary.id
   name    = "@"
   type    = "AAAA"
@@ -34,7 +34,7 @@ resource "hetznerdns_record" "subdomain_a" {
 }
 
 resource "hetznerdns_record" "subdomain_aaaa" {
-  for_each = hcloud_server.main.ipv6_address == "" ? toset([]) : toset(var.SUBDOMAINS_TO_REGISTER)
+  for_each = var.ENABLE_IPV6 ? toset(var.SUBDOMAINS_TO_REGISTER) : toset([])
 
   zone_id = data.hetznerdns_zone.primary.id
   name    = each.value
