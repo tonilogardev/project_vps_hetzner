@@ -30,7 +30,7 @@ echo \
 apt-get update -y
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 systemctl enable --now docker
-log "Docker Compose version requested: ${DOCKER_COMPOSE_VERSION} (using package repo version)"
+log "Docker Compose version requested: $${DOCKER_COMPOSE_VERSION} (using package repo version)"
 docker --version || true
 docker compose version || true
 
@@ -48,22 +48,22 @@ HETZNER_CREDS_DIR="/root/.secrets"
 HETZNER_CREDS_FILE="$HETZNER_CREDS_DIR/hetzner_credentials.ini"
 mkdir -p "$HETZNER_CREDS_DIR"
 chmod 0700 "$HETZNER_CREDS_DIR"
-echo "dns_hetzner_api_token = ${HETZNERDNS_TOKEN}" > "$HETZNER_CREDS_FILE"
+echo "dns_hetzner_api_token = $${HETZNERDNS_TOKEN}" > "$HETZNER_CREDS_FILE"
 chmod 0600 "$HETZNER_CREDS_FILE"
 
-log "Requesting wildcard certificates for ${DOMAIN_NAME}"
+log "Requesting wildcard certificates for $${DOMAIN_NAME}"
 certbot certonly --authenticator dns-hetzner \
   --dns-hetzner-credentials "$HETZNER_CREDS_FILE" \
   --non-interactive --agree-tos \
-  --email "${ADMIN_EMAIL}" \
-  -d "${DOMAIN_NAME}" -d "*.${DOMAIN_NAME}" \
+  --email "$${ADMIN_EMAIL}" \
+  -d "$${DOMAIN_NAME}" -d "*.$${DOMAIN_NAME}" \
   --server https://acme-v02.api.letsencrypt.org/directory \
   || log "Certbot did not obtain certificate on first attempt"
 
 log "Configuring automatic renewal"
 (crontab -l 2>/dev/null; echo "0 3 * * * /usr/bin/certbot renew --quiet") | crontab -
 
-CERT_PATH="/etc/letsencrypt/live/${DOMAIN_NAME}"
+CERT_PATH="/etc/letsencrypt/live/$${DOMAIN_NAME}"
 if [ -d "$CERT_PATH" ]; then
   log "Certificates located at $CERT_PATH"
 else
