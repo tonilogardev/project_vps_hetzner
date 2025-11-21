@@ -45,6 +45,9 @@ git add .
 git commit -m"add teraform.yml"
 git push origin main_dev_pro
 git checkout main
+git add .
+git commit -m"add action Terraform VPS"
+git push origin main
 ```
 
 
